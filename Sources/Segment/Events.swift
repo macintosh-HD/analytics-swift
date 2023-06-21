@@ -14,7 +14,7 @@ extension Analytics {
     // and they need to write a middleware/enrichment now.
     // the objc version should accomodate them if it's really needed.
     
-    public func track<P: Codable>(name: String, properties: P?) {
+    public func track(name: String, properties: Codable?) {
         do {
             if let properties = properties {
                 let jsonProperties = try JSON(with: properties)
@@ -42,7 +42,7 @@ extension Analytics {
     ///     generate the UUID and Apple's policies on IDs, see
     ///      https://segment.io/libraries/ios#ids
     /// - traits: A dictionary of traits you know about the user. Things like: email, name, plan, etc.
-    public func identify<T: Codable>(userId: String, traits: T?) {
+    public func identify(userId: String, traits: Codable?) {
         do {
             if let traits = traits {
                 let jsonTraits = try JSON(with: traits)
@@ -62,7 +62,7 @@ extension Analytics {
     /// Associate a user with their unique ID and record traits about them.
     /// - Parameters:
     ///   - traits: A dictionary of traits you know about the user. Things like: email, name, plan, etc.
-    public func identify<T: Codable>(traits: T) {
+    public func identify(traits: any Codable) {
         do {
             let jsonTraits = try JSON(with: traits)
             store.dispatch(action: UserInfo.SetTraitsAction(traits: jsonTraits))
@@ -85,7 +85,7 @@ extension Analytics {
         process(incomingEvent: event)
     }
     
-    public func screen<P: Codable>(title: String, category: String? = nil, properties: P?) {
+    public func screen(title: String, category: String? = nil, properties: Codable? = (nil as ScreenEvent?)) {
         do {
             if let properties = properties {
                 let jsonProperties = try JSON(with: properties)
