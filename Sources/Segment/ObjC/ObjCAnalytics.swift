@@ -91,7 +91,7 @@ extension ObjCAnalytics {
     ///   - category: A category to the type of screen if it applies.
     @objc(screen:category:)
     public func screen(title: String, category: String?) {
-        analytics.screen(title: title, category: category, properties: nil)
+        analytics.screen(title: title, category: category)
     }
     /// Track a screen change with a title, category and other properties.
     /// - Parameters:
